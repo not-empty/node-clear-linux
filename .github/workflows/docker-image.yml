@@ -24,6 +24,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    steps:
       - name: Run image
         run: docker run ${IMAGE_NAME}
 
