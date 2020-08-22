@@ -2,34 +2,46 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
-
-    tags:
-      - v*
-
+    branches: [ master ]
   pull_request:
+    branches: [ master ]
 
 env:
   IMAGE_NAME: node-clear-linux
 
 jobs:
-  push:
+  setup:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        run: docker build --file Dockerfile --tag ${IMAGE_NAME} .
 
-      - name: Log into registry
+  test:
+    needs: setup
+
+    runs-on: ubuntu-latest
+
+      - name: Run image
+        run: docker run ${IMAGE_NAME}
+
+      - name: Validate node
+        run: echo $(docker exec -it ${IMAGE_NAME} node -v)
+
+  push:
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auth
         run: echo "${{ secrets.GH_TOKEN }}" | docker login docker.pkg.github.com -u ${{ secrets.GH_USER }}} --password-stdin
 
       - name: Push image
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/${IMAGE_NAME}
 
-          docker tag $IMAGE_NAME $IMAGE_ID:latest
-          docker push $IMAGE_ID:latest
+          docker tag ${IMAGE_NAME} ${IMAGE_ID}:latest
+          docker push ${IMAGE_ID}:latest

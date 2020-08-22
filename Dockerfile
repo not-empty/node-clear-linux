@@ -1,18 +1,25 @@
 FROM clearlinux:latest AS builder
 
+ENV VERSION_ID 33620
+
 ARG swupd_args
+
 RUN swupd update --no-boot-update $swupd_args
 
 COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
 
-RUN source /os-release && \
-    mkdir /install_root \
-    && swupd os-install -V ${VERSION_ID} \
+RUN source /os-release
+
+RUN mkdir /install_root
+
+RUN swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
     --bundles=os-core-update,nodejs-basic --no-boot-update
 
 RUN mkdir /os_core_install
+
 COPY --from=clearlinux/os-core:latest / /os_core_install/
+
 RUN cd / && \
     find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
 
