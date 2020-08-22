@@ -19,11 +19,12 @@ jobs:
       - name: Build image
         run: docker build --file Dockerfile --tag ${IMAGE_NAME} .
 
-      - name: Run image
-        run: docker run ${IMAGE_NAME}:latest --name ${IMAGE_NAME}
-
-      - name: Validate node
-        run: echo $(docker exec -it ${IMAGE_NAME} node -v)
+      - name: Verify if node is running
+        run: |
+          node_version=$(docker run -it --name ${IMAGE_NAME} ${IMAGE_NAME}:latest node -v)
+          if [[ $node_version != "v"* ]]; then
+            exit 1
+          fi
 
   push:
     needs: test
