@@ -22,7 +22,7 @@ jobs:
       - name: Verify if node is running
         run: |
           node_version=$(docker run --name ${IMAGE_NAME} ${IMAGE_NAME}:latest node -v)
-          if [[ $node_version != "v"* ]]; then
+          if [[ $node_version != "a"* ]]; then
             exit 1
           fi
 
