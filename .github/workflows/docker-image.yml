@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: node-clear-linux
 
 jobs:
-  setup:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,12 +19,6 @@ jobs:
       - name: Build image
         run: docker build --file Dockerfile --tag ${IMAGE_NAME} .
 
-  test:
-    needs: setup
-
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Run image
         run: docker run ${IMAGE_NAME}
 
@@ -36,7 +30,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    if: github.event_name == 'push'
+
     steps:
+      - name: Build image
+        run: docker build --file Dockerfile --tag ${IMAGE_NAME} .
+
       - name: Auth
         run: echo "${{ secrets.GH_TOKEN }}" | docker login docker.pkg.github.com -u ${{ secrets.GH_USER }}} --password-stdin
 
