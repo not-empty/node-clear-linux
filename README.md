@@ -2,6 +2,7 @@
 
 [![Latest Version](https://img.shields.io/github/v/release/kiwfy/node-clear-linux.svg?style=flat-square)](https://github.com/kiwfy/node-clear-linux/releases)
 [![Build Status](https://img.shields.io/github/workflow/status/kiwfy/node-clear-linux/CI?label=ci%20build&style=flat-square)](https://github.com/kiwfy/node-clear-linux/actions?query=workflow%3ACI)
+![Code Size](https://img.shields.io/github/languages/code-size/kiwfy/php73-clear-linux?style=flat-square)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Docker image with Node using Clear Linux S.O
