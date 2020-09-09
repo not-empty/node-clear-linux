@@ -33,6 +33,10 @@ services:
             - ./:/usr/src/
 ```
 
+### Get latest version
+
+To found and verify what is latest image look at [Clear Linux CDN](https://cdn.download.clearlinux.org/latest)
+
 ### Development
 
 Want to contribute? Great!
