@@ -1,8 +1,6 @@
 FROM clearlinux:latest AS builder
 
-ENV VERSION_ID 33680
-
-ARG swupd_args
+ENV VERSION_ID 33700
 
 COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
 
