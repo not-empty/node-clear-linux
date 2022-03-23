@@ -1,6 +1,6 @@
 FROM clearlinux:latest AS builder
 
-ENV VERSION_ID 34280
+ENV VERSION_ID 36060
 
 COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
 
