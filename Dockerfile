@@ -1,6 +1,6 @@
 FROM clearlinux:latest AS builder
 
-ENV VERSION_ID 36270
+ENV VERSION_ID 38340
 
 COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
 
@@ -18,7 +18,6 @@ COPY --from=clearlinux/os-core:latest / /os_core_install/
 
 RUN cd / && \
     find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
-
 
 FROM clearlinux/os-core:latest
 
